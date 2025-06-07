@@ -22,6 +22,23 @@ const createUser = asyncHandler(async (req, res) => {
   });
 });
 
+const getAllUsers = asyncHandler(async (req, res) => {
+  const users = await prisma.user.findMany({
+    select: {
+      id: true,
+      username: true,
+    },
+    orderBy: { username: "asc" },
+  });
+
+  if (users.length === 0) {
+    return res.status(404).json({ message: "No users found" });
+  }
+
+  res.json(users);
+});
+
 module.exports = {
   createUser,
+  getAllUsers,
 };
