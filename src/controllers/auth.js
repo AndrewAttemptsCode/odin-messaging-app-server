@@ -31,4 +31,6 @@ const login = asyncHandler(async (req, res) => {
   res.json(token);
 });
 
-module.exports = login;
+module.exports = {
+  login,
+};
