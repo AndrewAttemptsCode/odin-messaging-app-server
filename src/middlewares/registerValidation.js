@@ -4,6 +4,7 @@ const prisma = require("../../configs/prismaClient");
 const registerValidation = [
   body("username")
     .trim()
+    .toLowerCase()
     .isLength({ min: 3 })
     .withMessage("Min length of 3 characters")
     .isLength({ max: 20 })
