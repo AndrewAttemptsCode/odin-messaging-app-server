@@ -14,5 +14,6 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
 app.use("/users", routes.user);
+app.use("/auth", routes.auth);
 
 module.exports = app;
