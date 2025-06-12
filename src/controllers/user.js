@@ -20,6 +20,8 @@ const createUser = asyncHandler(async (req, res) => {
       password: hashedPassword,
     },
   });
+
+  res.json({ msg: "success" });
 });
 
 const getAllUsers = asyncHandler(async (req, res) => {
