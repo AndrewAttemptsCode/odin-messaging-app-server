@@ -1,4 +1,7 @@
-const getChat = (req, res) => {
+const asyncHandler = require("express-async-handler");
+const prisma = require("../../configs/prismaClient");
+
+const getChat = asyncHandler(async (req, res) => {
   const { sender, receiver } = req.params;
   const { id } = req.user;
 
@@ -6,7 +9,43 @@ const getChat = (req, res) => {
     return res.status(401).json({ msg: "Unauthorized" });
   }
 
-  res.json({ msg: "Success", sender, receiver });
-}
+  const existingChat = await prisma.chat.findFirst({
+    where: {
+      OR: [
+        {
+          AND: [
+            { user1Id: Number(sender) },
+            { user2Id: Number(receiver) },
+          ],
+        },
+        {
+          AND: [
+            { user1Id: Number(receiver) },
+            { user2Id: Number(sender) },
+          ],
+        },
+      ],
+    },
+    include: {
+      messages: true,
+    },
+  })
+
+  if (existingChat) {
+    return res.json(existingChat);
+  }
+
+  if (!existingChat) {
+    const newChat = await prisma.chat.create({
+      data: {
+        user1Id: Number(sender),
+        user2Id: Number(receiver),
+      },
+    })
+
+    return res.json(newChat);
+  }
+
+});
 
 module.exports = { getChat };
