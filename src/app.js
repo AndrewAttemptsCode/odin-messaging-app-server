@@ -15,5 +15,6 @@ app.use(express.urlencoded({ extended: true }));
 
 app.use("/users", routes.user);
 app.use("/auth", routes.auth);
+app.use("/chat", routes.chat);
 
 module.exports = app;
