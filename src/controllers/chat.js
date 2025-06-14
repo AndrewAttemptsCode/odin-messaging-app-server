@@ -27,7 +27,16 @@ const getChat = asyncHandler(async (req, res) => {
       ],
     },
     include: {
-      messages: true,
+      messages: {
+        include: {
+          sender: {
+            select: {
+              id: true,
+              username: true,
+            },
+          },
+        },
+      },
     },
   })
 
