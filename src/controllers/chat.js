@@ -57,4 +57,11 @@ const getChat = asyncHandler(async (req, res) => {
 
 });
 
-module.exports = { getChat };
+const createMessage = (req, res) => {
+  const { chatId } = req.params;
+  const { text, senderId, receiverId } = req.body;
+  console.log(`chat id: ${chatId}, sender id: ${senderId}, receiver id: ${receiverId}, text: ${text}`);
+  res.json({ msg: "success" });
+}
+
+module.exports = { getChat, createMessage };
