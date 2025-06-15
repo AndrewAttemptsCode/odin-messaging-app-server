@@ -57,11 +57,19 @@ const getChat = asyncHandler(async (req, res) => {
 
 });
 
-const createMessage = (req, res) => {
+const createMessage = asyncHandler(async (req, res) => {
   const { chatId } = req.params;
-  const { text, senderId, receiverId } = req.body;
-  console.log(`chat id: ${chatId}, sender id: ${senderId}, receiver id: ${receiverId}, text: ${text}`);
-  res.json({ msg: "success" });
-}
+  const { text, senderId } = req.body;
+
+  const newMessage = await prisma.message.create({
+    data: {
+      text,
+      senderId,
+      chatId: Number(chatId),
+    },
+  })
+
+  res.json({ msg: "success", newMessage });
+})
 
 module.exports = { getChat, createMessage };
