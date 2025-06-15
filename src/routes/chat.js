@@ -5,5 +5,6 @@ const authenticateUser = require("../middlewares/authenticateUser");
 const router = Router();
 
 router.get("/:sender/:receiver", authenticateUser, controllers.chat.getChat);
+router.post("/:chatId/messages", authenticateUser, controllers.chat.createMessage);
 
 module.exports = router;
