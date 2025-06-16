@@ -6,5 +6,6 @@ const router = Router();
 
 router.get("/between/:senderId/:receiverId", authenticateUser, controllers.chat.getChat);
 router.post("/:chatId/messages", authenticateUser, controllers.chat.createMessage);
+router.get("/:userId", authenticateUser, controllers.chat.getUserChats);
 
 module.exports = router;
