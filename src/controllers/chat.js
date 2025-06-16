@@ -72,4 +72,39 @@ const createMessage = asyncHandler(async (req, res) => {
   res.json({ msg: "success", newMessage });
 })
 
-module.exports = { getChat, createMessage };
+const getUserChats = asyncHandler(async (req, res) => {
+  const { userId } = req.params;
+  const { id } = req.user;
+
+  if (id !== Number(userId)) {
+    return res.status(401).json({ msg: "Unauthorized" });
+  }
+
+  const chats = await prisma.chat.findMany({
+    where: {
+      OR: [
+        { user1Id: Number(userId) },
+        { user2Id: Number(userId) },
+      ],
+    },
+    include: {
+      user1: {
+        select: {
+          id: true,
+          username: true,
+        },
+      },
+      user2: {
+        select: {
+          id: true,
+          username: true,
+        },
+      },
+    },
+  });
+
+  res.json(chats);
+
+});
+
+module.exports = { getChat, createMessage, getUserChats };
