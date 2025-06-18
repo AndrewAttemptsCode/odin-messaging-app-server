@@ -29,6 +29,8 @@ const getAllUsers = asyncHandler(async (req, res) => {
     select: {
       id: true,
       username: true,
+      avatarColor: true,
+      usernameColor: true,
     },
     orderBy: { username: "asc" },
   });
