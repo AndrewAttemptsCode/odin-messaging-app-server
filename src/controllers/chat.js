@@ -33,6 +33,8 @@ const getChat = asyncHandler(async (req, res) => {
             select: {
               id: true,
               username: true,
+              avatarColor: true,
+              usernameColor: true,
             },
           },
         },
