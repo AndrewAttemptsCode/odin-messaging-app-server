@@ -42,7 +42,28 @@ const getAllUsers = asyncHandler(async (req, res) => {
   res.json(users);
 });
 
+const updateUserSettings = asyncHandler(async (req, res) => {
+  const { userId } = req.params;
+  const { avatarColor, usernameColor } = req.body;
+  const { id } = req.user;
+
+  if (id !== Number(userId)) {
+    return res.status(401).json({ msg: "Unauthorized" });
+  }
+
+  await prisma.user.update({
+    where: { id: Number(userId) },
+    data: {
+      avatarColor,
+      usernameColor,
+    },
+  });
+
+  res.json({ message: "User settings updated" });
+});
+
 module.exports = {
   createUser,
   getAllUsers,
+  updateUserSettings,
 };
