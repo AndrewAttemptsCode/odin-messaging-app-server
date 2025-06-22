@@ -16,8 +16,8 @@ model User {
   messages      Message[]
   chats1        Chat[]    @relation("User1Chats")
   chats2        Chat[]    @relation("User2Chats")
-  avatarColor   String?
-  usernameColor String?
+  avatarColor   String    @default("#5f9ea0")
+  usernameColor String    @default("#000000")
 }
 
 model Message {
