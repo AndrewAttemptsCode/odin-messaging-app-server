@@ -6,7 +6,7 @@ const getChat = asyncHandler(async (req, res) => {
   const { id } = req.user;
 
   if (id !== Number(senderId) && id !== Number(receiverId)) {
-    return res.status(401).json({ msg: "Unauthorized" });
+    return res.status(401).json({ message: "Unauthorized access" });
   }
 
   const existingChat = await prisma.chat.findFirst({
@@ -79,7 +79,7 @@ const getUserChats = asyncHandler(async (req, res) => {
   const { id } = req.user;
 
   if (id !== Number(userId)) {
-    return res.status(401).json({ msg: "Unauthorized" });
+    return res.status(401).json({ message: "Unauthorized access" });
   }
 
   const chats = await prisma.chat.findMany({
